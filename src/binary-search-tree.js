@@ -22,7 +22,7 @@ class BinarySearchTree {
       this._root = node
       return
     }
-    const currNode = this._root
+    let currNode = this._root
     while (true) {
       if (data === currNode.data) return
       if (data < currNode.data) {
@@ -42,13 +42,28 @@ class BinarySearchTree {
   } 
 
   has(data) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    return !!this.find(data)
   }
 
   find(data) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (!this._root) return null
+    let currNode = this._root
+    while(true) {
+      if (data === currNode.data) {
+        return currNode
+      }
+      if (data < currNode.data) {
+        if (!currNode.left) {
+          return null
+        }
+        currNode = currNode.left
+      } else {
+        if (!currNode.right) {
+          return null
+        }
+        currNode = currNode.right
+      }
+    }
   }
 
   remove(data) {
@@ -66,7 +81,6 @@ class BinarySearchTree {
     // remove line with error and write your code here
   }
 }
-
 
 module.exports = {
   BinarySearchTree

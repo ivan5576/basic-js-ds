@@ -39,7 +39,7 @@ class BinarySearchTree {
         currNode = currNode.right
       }
     }
-  } 
+  }
 
   has(data) {
     return !!this.find(data)
@@ -48,7 +48,7 @@ class BinarySearchTree {
   find(data) {
     if (!this._root) return null
     let currNode = this._root
-    while(true) {
+    while (true) {
       if (data === currNode.data) {
         return currNode
       }
@@ -66,9 +66,40 @@ class BinarySearchTree {
     }
   }
 
+  _removeNode(node, data) {
+    if (!node) return null
+
+    if (data === node.data) {
+      if (!node.left && !node.right) {
+        return null
+      } 
+      
+      if (!node.left) {
+        return node.right
+      }
+      
+      if (!node.right) {
+        return node.left
+      }
+
+      let currentNode = node.right
+      while (currentNode.left) {
+        currentNode = currentNode.left
+      }
+      
+      node.data = currentNode.data
+      node.right = this._removeNode(node.right, currentNode.data)
+    } else if (data < node.data) {
+      node.left = this._removeNode(node.left, data)
+    } else {
+      node.right = this._removeNode(node.right, data)
+    }
+    
+    return node
+  }
+
   remove(data) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    this._root = this._removeNode(this._root, data)
   }
 
   min() {
